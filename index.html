@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO QUYEN HS - Practice Test</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --bg: #f8fafc;
+            --card: #ffffff;
+        }
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 10px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h1 { color: var(--primary); text-align: center; font-size: 1.4rem; margin-bottom: 5px; }
+        h2 { font-size: 1.1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-top: 25px; color: #334155; }
+        h3 { font-size: 0.9rem; color: #64748b; text-transform: uppercase; margin-top: 15px; }
+        
+        .q-item { margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px dashed #f1f5f9; }
+        .q-text { font-weight: 500; font-size: 1rem; margin-bottom: 8px; display: block; }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        input:focus { border-color: var(--primary); outline: none; }
+        
+        .correct-input { border-color: var(--success) !important; background-color: #f0fdf4; }
+        .wrong-input { border-color: var(--error) !important; background-color: #fef2f2; }
+        
+        .feedback { display: none; font-size: 0.85rem; margin-top: 5px; font-weight: bold; }
+        .feedback.visible { display: block; }
+        .feedback.correct { color: var(--success); }
+        .feedback.wrong { color: var(--error); }
+
+        .btn-container { position: sticky; bottom: 10px; padding: 10px 0; background: var(--bg); }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+        button:active { transform: scale(0.98); }
+        
+        .score-box {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #eff6ff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Practice Test</h1>
+    <p style="text-align:center; color:#64748b; font-size:0.8rem;">NGO QUYEN HIGH SCHOOL - HKII</p>
+
+    <div id="score-display" class="score-box"></div>
+
+    <h2>UNIT 7: TOURISM</h2>
+    <h3>I. Tenses</h3>
+    <div id="u7-tenses"></div>
+
+    <h3>II. Word Form</h3>
+    <div id="u7-wordform"></div>
+
+    <h3>III. Rewrite Sentences</h3>
+    <div id="u7-rewrite"></div>
+
+    <h2>UNIT 8: SCIENCE</h2>
+    <h3>I. Verb Form</h3>
+    <div id="u8-verbform"></div>
+
+    <h3>II. Word Form</h3>
+    <div id="u8-wordform"></div>
+
+    <h3>III. Rewrite Sentences</h3>
+    <div id="u8-rewrite"></div>
+
+    <div class="btn-container">
+        <button onclick="checkAnswers()">SUBMIT ALL</button>
+    </div>
+</div>
+
+<script>
+    const data = {
+        u7_tenses: [
+            { id: 1, q: "1. After he (have) breakfast tomorrow, he will get ready to go to work.", a: "has" },
+            { id: 2, q: "2. As soon as he finishes dinner, he (take) the children for a walk.", a: "will take" },
+            { id: 3, q: "3. He will work at his desk until he (go) to another meeting.", a: "goes" },
+            { id: 4, q: "4. She (finish) lunch by the time we arrived.", a: "had finished" },
+            { id: 5, q: "5. Bob will come soon. When Bob (come), we will see him.", a: "comes" },
+            { id: 6, q: "6. After I get home, I (have) dinner.", a: "will have" },
+            { id: 7, q: "7. As soon as the taxi (arrive), we will be able to leave.", a: "arrives" },
+            { id: 8, q: "8. I (be) here when you arrive tomorrow.", a: "will be" },
+            { id: 9, q: "9. I am going to wait right here until Jessica (come).", a: "comes" },
+            { id: 10, q: "10. Thanks to her father's encouragement, she (make) great progress.", a: "has made" }
+        ],
+        u7_wordform: [
+            { id: 11, q: "11. My father was strongly (support) of my decision.", a: "supportive" },
+            { id: 12, q: "12. Her request was met with a polite (refuse).", a: "refusal" },
+            { id: 13, q: "13. She almost (success) in climbing Mount Everest.", a: "succeeded" },
+            { id: 14, q: "14. Funded by voluntary (donate).", a: "donations" },
+            { id: 15, q: "15. He kicked the ball so (power).", a: "powerfully" },
+            { id: 16, q: "16. She was (finance) secure.", a: "financially" },
+            { id: 17, q: "17. There was some (avoid) noise.", a: "unavoidable" },
+            { id: 18, q: "18. Actually (danger) when mixed with unclean water.", a: "dangerous" },
+            { id: 19, q: "19. Made a huge (invest) in his company.", a: "investment" },
+            { id: 20, q: "20. Guests (assistance) with preparation yesterday.", a: "assisted" }
+        ],
+        u7_rewrite: [
+            { id: 21, q: "21. Kate went out for dinner, but first she washed her hair. <br>→ After Kate had...", a: "washed her hair, she went out for dinner" },
+            { id: 22, q: "22. If they offered me the job, I would accept it. <br>→ Were...", a: "they to offer me the job, I would accept it" },
+            { id: 23, q: "23. Jack told Sheila he'd see her tomorrow. <br>→ Jack told Sheila that...", a: "he would see her there the following day" },
+            { id: 24, q: "24. Be careful or you will make a lot of mistakes. <br>→ If you...", a: "are not careful, you will make a lot of mistakes" },
+            { id: 25, q: "25. The flight was cancelled. Joe was going to take it. <br>→ The flight which...", a: "Joe was going to take was cancelled" },
+            { id: 26, q: "26. This is Peter. His sister is my classmate. <br>→ This is Peter whose...", a: "sister is my classmate" },
+            { id: 27, q: "27. My daughter feels frightened when she sees cockroaches. <br>→ My daughter is afraid...", a: "of seeing cockroaches" },
+            { id: 28, q: "28. The teacher made me repeat the whole story. <br>→ I...", a: "was made to repeat the whole story" },
+            { id: 29, q: "29. I haven’t been to Dalat for five years. <br>→ The last time...", a: "I went to Dalat was five years ago" },
+            { id: 30, q: "30. I leave home early to avoid the rush hour. <br>→ In order...", a: "to avoid the rush hour, I leave home early" }
+        ],
+        u8_verbform: [
+            { id: 31, q: "1. As soon as the war (be) over...", a: "is" },
+            { id: 32, q: "2. Before my wife (get) home today...", a: "gets" },
+            { id: 33, q: "3. Stop (shout)...", a: "shouting" },
+            { id: 34, q: "4. He has postponed (take) the trip.", a: "taking" },
+            { id: 35, q: "5. The mail is supposed (deliver) at noon.", a: "to be delivered" },
+            { id: 36, q: "6. The spy admitted (give) secret info.", a: "giving" },
+            { id: 37, q: "7. Doesn't mind (criticize) by his friends.", a: "being criticized" },
+            { id: 38, q: "8. Considers (ban) vehicles.", a: "banning" },
+            { id: 39, q: "9. People do not like (ask) personal questions.", a: "being asked" },
+            { id: 40, q: "10. It’s time (study) more.", a: "to study" }
+        ],
+        u8_wordform: [
+            { id: 41, q: "11. I was the lucky (discover) of a painting.", a: "discoverer" },
+            { id: 42, q: "12. Finally (discover) them in a drawer.", a: "discovered" },
+            { id: 43, q: "13. The greatest (technology) advance.", a: "technological" },
+            { id: 44, q: "14. Developed an (invent) different game.", a: "inventively" },
+            { id: 45, q: "15. The robbery was (record) on camera.", a: "recorded" },
+            { id: 46, q: "16. Very (apology) about everything.", a: "apologetic" },
+            { id: 47, q: "17. Deal (construct) with the problems.", a: "constructively" },
+            { id: 48, q: "18. Kits for amateur car (construct).", a: "constructors" },
+            { id: 49, q: "19. Writing was very (construct).", a: "constructive" },
+            { id: 50, q: "20. Advanced (technological) to study cells.", a: "technology" }
+        ],
+        u8_rewrite: [
+            { id: 51, q: "21. Ann said: I left my raincoat here 2 days ago. <br>→ Ann told...", a: "them she had left her raincoat there two days before" },
+            { id: 52, q: "22. They appointed a new sales manager. <br>→ A new sales...", a: "manager was appointed yesterday" },
+            { id: 53, q: "23. It’s pointless telling her to clean. <br>→ There’s no...", a: "point in telling her to clean her room" },
+            { id: 54, q: "24. Time to do something to save the environment. <br>→ It’s time we...", a: "did something to save the environment" },
+            { id: 55, q: "25. No one has seen John and Alice since last month. <br>→ John and Alice...", a: "haven't been seen since last month" },
+            { id: 56, q: "26. Someone painted my house 2 months ago. <br>→ I had my...", a: "house painted two months ago" },
+            { id: 57, q: "27. Mother reads poetry to me every night. <br>→ A lot of poetry...", a: "is read to me by my mother every night" },
+            { id: 58, q: "28. Nice to be able to fly a plane. <br>→ I wish I...", a: "could fly a plane" },
+            { id: 59, q: "29. Can you help me with homework? <br>→ Can you give...", a: "me a hand with my English homework" },
+            { id: 60, q: "30. Tom finds driving on the left difficult. <br>→ Tom isn’t...", a: "used to driving on the left" }
+        ]
+    };
+
+    function renderSection(sectionId, questions) {
+        const container = document.getElementById(sectionId);
+        questions.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'q-item';
+            div.innerHTML = `
+                <label class="q-text">${item.q}</label>
+                <input type="text" id="q-${item.id}" autocomplete="off" placeholder="Type answer here...">
+                <div id="fb-${item.id}" class="feedback"></div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Load everything
+    renderSection('u7-tenses', data.u7_tenses);
+    renderSection('u7-wordform', data.u7_wordform);
+    renderSection('u7-rewrite', data.u7_rewrite);
+    renderSection('u8-verbform', data.u8_verbform);
+    renderSection('u8-wordform', data.u8_wordform);
+    renderSection('u8-rewrite', data.u8_rewrite);
+
+    function checkAnswers() {
+        let score = 0;
+        let total = 60;
+        
+        Object.values(data).flat().forEach(item => {
+            const input = document.getElementById(`q-${item.id}`);
+            const feedback = document.getElementById(`fb-${item.id}`);
+            const userAns = input.value.trim().toLowerCase().replace(/[.,]$/, ""); // Simple normalize
+            const correctAns = item.a.toLowerCase().replace(/[.,]$/, "");
+
+            if (userAns === correctAns) {
+                input.className = 'correct-input';
+                feedback.innerText = "✓ Correct";
+                feedback.className = "feedback visible correct";
+                score++;
+            } else {
+                input.className = 'wrong-input';
+                feedback.innerHTML = `✗ Correct answer: <br><strong>${item.a}</strong>`;
+                feedback.className = "feedback visible wrong";
+            }
+        });
+
+        const scoreDiv = document.getElementById('score-display');
+        scoreDiv.style.display = 'block';
+        scoreDiv.innerHTML = `<h3>Result: ${score} / ${total}</h3>`;
+        window.scrollTo(0, 0);
+    }
+</script>
+
+</body>
+</html>
